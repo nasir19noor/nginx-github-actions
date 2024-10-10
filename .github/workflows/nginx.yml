@@ -20,7 +20,7 @@ jobs:
 
     - name: Restart web server (if necessary)
       run: |
-        sudo systemctl restart apache2  # or nginx, depending on your web server
+        service nginx restart
 
     - name: Clean up
       run: |
