@@ -3,38 +3,16 @@ name: Deploy HTML Application
 on:
   push:
     branches:
-      - main  # or your default branch name
+      - main  # Change to your default branch if different
 
 jobs:
   deploy:
     runs-on: self-hosted
 
     steps:
-    - name: Clean up existing run.sh
-      run: |
-        if [ -f "/home/duniacloud6_gmail_com/run.sh" ]; then
-          rm /home/duniacloud6_gmail_com/run.sh
-        fi
+    - name: Check out repository
+      uses: actions/checkout@v3
 
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Copy files to web server directory
+    - name: Copy HTML files to server directory
       run: |
-        sudo cp -R * /var/www/html/
-        sudo chown -R www-data:www-data /var/www/html/
-
-    - name: Restart web server (if necessary)
-      run: |
-        service nginx restart
-
-    - name: Clean up
-      run: |
-        sudo find /var/www/html/ -type f -not -path "*/.*" -delete
-
-    - name: Final cleanup
-      if: always()
-      run: |
-        if [ -f "/home/duniacloud6_gmail_com/run.sh" ]; then
-          rm /home/duniacloud6_gmail_com/run.sh
-        fi
+        sudo cp -r /var/www/html
