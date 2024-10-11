@@ -16,4 +16,5 @@ jobs:
     - name: Copy HTML files to server directory
       run: |
         pwd
-        cp -r /var/www/html
+        sudo su
+        cp *.* /var/www/html
